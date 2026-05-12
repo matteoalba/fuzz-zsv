@@ -1,0 +1,31 @@
+services:
+  fuzzer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TARGET_REPO:    ${TARGET_REPO}
+        TARGET_VERSION: ${TARGET_VERSION}
+        TARGET_NAME:    ${TARGET_NAME}
+        FUZZER_MAX_LEN: ${FUZZER_MAX_LEN}
+
+    image: fuzzer-zsv:pr612
+    restart: on-failure
+
+    environment:
+      - FUZZER_MAX_TIME=${FUZZER_MAX_TIME}
+      - FUZZER_MAX_LEN=${FUZZER_MAX_LEN}
+      - FUZZER_JOBS=${FUZZER_JOBS}
+
+    volumes:
+      - corpus_shared:/home/fuzzer/corpus_shared
+      - ./logs_local:/home/fuzzer/logs
+
+    stdin_open: true
+    tty: true
+
+    env_file:
+      - .env
+
+volumes:
+  corpus_shared:

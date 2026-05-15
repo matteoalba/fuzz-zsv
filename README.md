@@ -10,6 +10,8 @@ libFuzzer harness for [zsv](https://github.com/liquidaty/zsv) — a fast CSV par
 ## Usage
 
 ```bash
+mkdir ./logs_local
+
 # Build the fuzzer image (pulls zsv from the configured branch)
 docker compose build --no-cache
 
@@ -23,7 +25,7 @@ docker compose up --scale fuzzer=4
 
 Edit `.env` to change the target branch or fuzzing parameters:
 
-```
+```shell
 TARGET_REPO=https://github.com/liquidaty/zsv.git
 TARGET_VERSION=underflow-fix-v2
 FUZZER_MAX_LEN=65536

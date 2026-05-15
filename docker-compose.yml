@@ -1,5 +1,6 @@
 services:
   fuzzer:
+    user: fuzzer
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,8 +10,8 @@ services:
         TARGET_NAME:    ${TARGET_NAME}
         FUZZER_MAX_LEN: ${FUZZER_MAX_LEN}
 
-    image: fuzzer-zsv:pr612
-    restart: on-failure
+    image: fuzzer-${TARGET_NAME}:${TARGET_VERSION:-latest}
+    restart: ${RESTART:-on-failure}
 
     environment:
       - FUZZER_MAX_TIME=${FUZZER_MAX_TIME}
